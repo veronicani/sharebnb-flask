@@ -12,8 +12,8 @@ from models import (
 
 app = Flask(__name__)
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-#     "DATABASE_URL", 'postgresql:///sharebnb')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    "DATABASE_URL", 'postgresql:///sharebnb')
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
 app.config['SECRET_KEY'] = os.environ.get(
