@@ -5,6 +5,14 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
+def connect_db(app):
+    """Connect to database."""
+
+    app.app_context().push()
+    db.app = app
+    db.init_app(app)
+
+
 class Property(db.Model):
     """Current properties in the system. """
 
@@ -58,6 +66,20 @@ class Property(db.Model):
     # backref'ed in User Model
     # user = db.relationship('Property', backref="properties")
 
+    def serialize(self):
+        """Serialize property to a dict of property info."""
+
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "address": self.address,
+            "price": self.price,
+            "backyard": self.backyard,
+            "pool": self.pool,
+            "user_id": self.user_id,
+        }
+
 
 class User(db.Model):
     """Current users in the system. """
@@ -92,6 +114,21 @@ class User(db.Model):
 
     properties = db.relationship('Property', backref="user")
 
+    # TODO: finish serialize
+    def serialize(self):
+        """Serialize property to a dict of property info."""
+
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "address": self.address,
+            "price": self.price,
+            "backyard": self.backyard,
+            "pool": self.pool,
+            "user_id": self.user_id,
+        }
+
 
 class Image(db.Model):
     """Current images for properties in the system."""
@@ -111,3 +148,18 @@ class Image(db.Model):
 
     # backref'd in Property Model
     # property = db.relationship('Property', backref="images")
+
+    # TODO: finish serialize
+    def serialize(self):
+        """Serialize property to a dict of property info."""
+
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "address": self.address,
+            "price": self.price,
+            "backyard": self.backyard,
+            "pool": self.pool,
+            "user_id": self.user_id,
+        }
