@@ -25,14 +25,14 @@ connect_db(app)
 ###############################################################################
 # global variables
 
-AWS_BUCKET = os.environ['AWS_BUCKET']
+AWS_BUCKET = os.environ.get('AWS_BUCKET')
 print("AWS_BUCKET=", AWS_BUCKET)
 
 S3 = boto3.client(
     "s3",
-    os.environ['AWS_REGION'],
-    aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-    aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
+    os.environ.get('AWS_REGION'),
+    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
 )
 ##############################################################################
 # TEST form at root, so we can try our POST route and see if AWS works
@@ -68,7 +68,7 @@ def get_properties():
 
     return jsonify(properties=serialized)
 
-
+# TODO: change back to /properties when requesting from actual FE
 @app.post('/')
 def add_property():
     """ Add property,
@@ -78,6 +78,7 @@ def add_property():
 
     data = request.form
     # save object(image_file) name in database
+    print('request form data: ', data)
     breakpoint
 
     S3.upload_file("./test_img/pool1.jpg",
@@ -97,7 +98,7 @@ def add_property():
     property_image = data['image']
 
     print("property=", property)
-    print("image file=",property_image)
+    print("image file=", property_image)
 
     db.session.add(property)
     db.session.commit()
