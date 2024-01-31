@@ -114,19 +114,15 @@ class User(db.Model):
 
     properties = db.relationship('Property', backref="user")
 
-    # TODO: finish serialize
     def serialize(self):
         """Serialize property to a dict of property info."""
 
         return {
             "id": self.id,
-            "name": self.name,
-            "description": self.description,
-            "address": self.address,
-            "price": self.price,
-            "backyard": self.backyard,
-            "pool": self.pool,
-            "user_id": self.user_id,
+            "username": self.username,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
         }
 
 
@@ -149,17 +145,10 @@ class Image(db.Model):
     # backref'd in Property Model
     # property = db.relationship('Property', backref="images")
 
-    # TODO: finish serialize
     def serialize(self):
         """Serialize property to a dict of property info."""
 
         return {
             "id": self.id,
-            "name": self.name,
-            "description": self.description,
-            "address": self.address,
-            "price": self.price,
-            "backyard": self.backyard,
-            "pool": self.pool,
-            "user_id": self.user_id,
+            "properties_id": self.properties_id,
         }
