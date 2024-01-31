@@ -138,10 +138,15 @@ class Image(db.Model):
         primary_key=True,
     )
 
-    properties_id = db.Column(
+    property_id = db.Column(
         db.Integer,
         db.ForeignKey('properties.id', ondelete='CASCADE'),
         nullable=False,
+    )
+
+    aws_key = db.Column(
+        db.String,
+        nullable=False
     )
 
     # backref'd in Property Model
@@ -152,5 +157,6 @@ class Image(db.Model):
 
         return {
             "id": self.id,
-            "properties_id": self.properties_id,
+            "property_id": self.property_id,
+            "aws_key": self.aws_key
         }
