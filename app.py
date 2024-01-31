@@ -96,9 +96,9 @@ s3 = boto3.client(
     aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
     )
 
-s3.upload_file("test_img/360_F_280112608_32mLVErazmuz6OLyrz2dK4MgBULBUCSO.jpg",
+s3.upload_file("./test_img/pool1.jpg",
                AWS_BUCKET,
-               "360_F_280112608_32mLVErazmuz6OLyrz2dK4MgBULBUCSO.jpg")
+               "pool1.jpg")
 
 # print('Existing buckets: ')
 # for bucket in response['Buckets']:
