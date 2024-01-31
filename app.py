@@ -81,9 +81,7 @@ def add_property():
     # save object(image_file) name in database
     print('request form data: ', data)
 
-    S3.upload_file("./test_img/pool1.jpg",
-                   AWS_BUCKET,
-                   "pool1.jpg")
+
 
 
     property = Property(
@@ -97,9 +95,12 @@ def add_property():
     )
 
     property_image = data['image']
+    property_image_file = request.files
 
-    print("property=", property)
-    print("image file=", property_image)
+    # print("property=", property)
+    print("image=", property_image)
+    print("image_file=", property_image_file)
+
 
     db.session.add(property)
     db.session.commit()
@@ -114,7 +115,11 @@ def add_property():
     db.session.add(image)
     db.session.commit()
 
-    print("current image uuid=", image.aws_key)
+    S3.upload_file(property_image,
+                   AWS_BUCKET,
+                   image.aws_key)
+
+    # print("current image uuid=", image.aws_key)
     serialized = property.serialize()
 
     return (jsonify(property=serialized), 201)
