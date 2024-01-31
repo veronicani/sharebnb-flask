@@ -79,7 +79,7 @@ class Property(db.Model):
             "backyard": self.backyard,
             "pool": self.pool,
             "user_id": self.user_id,
-            "images": [image for image in self.images],
+            "images": [image.serialize() for image in self.images],
         }
 
 

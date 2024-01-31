@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 import boto3
+from uuid import uuid4
 
 from flask import (
     Flask, render_template, flash, redirect, session, g, abort, jsonify, request
@@ -84,13 +85,14 @@ def add_property():
                    AWS_BUCKET,
                    "pool1.jpg")
 
+
     property = Property(
         name=data['name'],
         description=data['description'],
         address=data['address'],
         price=data['price'],
-        backyard=data['backyard'],
-        pool=data['pool'],
+        backyard=True if data.get('backyard') else False,
+        pool=True if data.get('pool') else False,
         user_id=1
     )
 
@@ -100,16 +102,19 @@ def add_property():
     print("image file=", property_image)
 
     db.session.add(property)
-    # use flush? to access property id after adding it to DB
     db.session.commit()
 
     # TODO: add the image to the bucket, save the object name of image in db
 
     image = Image(
-        property_id="GET ID FROM QUERYING DB FOR PROPERTY",
-        aws_key="uuid that will also be used as object_name when upload_file"
+        property_id=property.id,
+        aws_key=uuid4()
     )
 
+    db.session.add(image)
+    db.session.commit()
+
+    print("current image uuid=", image.aws_key)
     serialized = property.serialize()
 
     return (jsonify(property=serialized), 201)
