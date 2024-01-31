@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+import boto3
 
 from flask import (
     Flask, render_template, flash, redirect, session, g, abort, jsonify, request
@@ -11,14 +12,21 @@ from models import (
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    "DATABASE_URL", 'postgresql:///sharebnb')
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
-app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
+app.config['SECRET_KEY'] = os.environ.get(
+    'SECRET_KEY', 'secret')
+
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
+###############################################################################
+# global variables
 
+AWS_BUCKET = os.environ['AWS_BUCKET']
+print("AWS_BUCKET=", AWS_BUCKET)
 ##############################################################################
 # TEST form at root, so we can try our POST route and see if AWS works
 
@@ -81,4 +89,17 @@ def add_property():
 
 # TODO: make AWS accounts! And try to upload images through test form
 
+s3 = boto3.client(
+    "s3",
+    os.environ['AWS_REGION'],
+    aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+    aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
+    )
 
+s3.upload_file("test_img/360_F_280112608_32mLVErazmuz6OLyrz2dK4MgBULBUCSO.jpg",
+               AWS_BUCKET,
+               "360_F_280112608_32mLVErazmuz6OLyrz2dK4MgBULBUCSO.jpg")
+
+# print('Existing buckets: ')
+# for bucket in response['Buckets']:
+#     print(f'{bucket["Name"]}')
