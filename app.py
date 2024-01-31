@@ -79,7 +79,6 @@ def add_property():
     data = request.form
     # save object(image_file) name in database
     print('request form data: ', data)
-    breakpoint
 
     S3.upload_file("./test_img/pool1.jpg",
                    AWS_BUCKET,
@@ -89,10 +88,10 @@ def add_property():
         name=data['name'],
         description=data['description'],
         address=data['address'],
-        # price=data['price'],
-        # backyard=data['backyard'],
-        # pool=data['pool'],
-        # images=data['images']
+        price=data['price'],
+        backyard=data['backyard'],
+        pool=data['pool'],
+        user_id=1
     )
 
     property_image = data['image']
@@ -101,7 +100,15 @@ def add_property():
     print("image file=", property_image)
 
     db.session.add(property)
+    # use flush? to access property id after adding it to DB
     db.session.commit()
+
+    # TODO: add the image to the bucket, save the object name of image in db
+
+    image = Image(
+        property_id="GET ID FROM QUERYING DB FOR PROPERTY",
+        aws_key="uuid that will also be used as object_name when upload_file"
+    )
 
     serialized = property.serialize()
 
