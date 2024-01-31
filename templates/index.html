@@ -16,7 +16,7 @@
 
 <h2>Add a new property!</h2>
 
-<form id="new-property-form">
+<form id="new-property-form" method="POST">
   <div>
     <label for="form-name">Name: </label>
     <input name="name" id="form-name">
@@ -29,12 +29,12 @@
 
   <div>
     <label for="form-address">Address: </label>
-    <input type="number" name="address" id="form-address">
+    <input type="text" name="address" id="form-address">
   </div>
 
   <div>
     <label for="form-image">Images (change input type to upload file): </label>
-    <input name="image" id="form-image">
+    <input type="file" name="image" id="form-image">
   </div>
 
   <button type="submit">Add!</button>
