@@ -69,6 +69,7 @@ class Property(db.Model):
     def serialize(self):
         """Serialize property to a dict of property info."""
 
+        # TODO: images -> image.serialize() or not
         return {
             "id": self.id,
             "name": self.name,
@@ -78,6 +79,7 @@ class Property(db.Model):
             "backyard": self.backyard,
             "pool": self.pool,
             "user_id": self.user_id,
+            "images": [image for image in self.images],
         }
 
 
