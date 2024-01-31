@@ -20,6 +20,16 @@ toolbar = DebugToolbarExtension(app)
 connect_db(app)
 
 ##############################################################################
+# TEST form at root, so we can try our POST route and see if AWS works
+
+@app.get("/")
+def root():
+    """TEST form."""
+
+    render_template("index.html")
+
+
+##############################################################################
 # Properties
 
 @app.get('/properties')
@@ -69,6 +79,6 @@ def add_property():
 
     return (jsonify(property=serialized), 201)
 
-
+# TODO: make AWS accounts! And try to upload images through test form
 
 
