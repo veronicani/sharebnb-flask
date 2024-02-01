@@ -93,6 +93,7 @@ def add_property():
 
     property_image_file = request.files['image']
     print("img_filename:", property_image_file.filename)
+    # breakpoint()
 
     db.session.add(property)
     db.session.commit()
