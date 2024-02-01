@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 import boto3
 from uuid import uuid4
+from flask_cors import CORS, cross_origin
 
 from flask import (
     Flask, render_template, flash, redirect, session, g, abort, jsonify, request
@@ -12,6 +13,7 @@ from models import (
     db, connect_db, User, Property, Image)
 
 app = Flask(__name__)
+CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     "DATABASE_URL", 'postgresql:///sharebnb')
@@ -71,6 +73,7 @@ def get_properties():
 
 
 @app.post('/properties')
+@cross_origin()
 def add_property():
     """ Add property,
             {name, description, address, price, backyard, pool, images}
@@ -81,14 +84,13 @@ def add_property():
     # save object(image_file) name in database
     print('request form data: ', data)
 
-
     property = Property(
         name=data['name'],
         description=data['description'],
         address=data['address'],
         price=data['price'],
-        backyard=data['backyard'],
-        pool=data['pool'],
+        backyard=True if data['backyard'] == 'true' else False,
+        pool=True if data['pool'] == 'true' else False,
         user_id=1
     )
 
