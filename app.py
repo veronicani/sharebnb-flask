@@ -81,9 +81,6 @@ def add_property():
     # save object(image_file) name in database
     print('request form data: ', data)
 
-
-
-
     property = Property(
         name=data['name'],
         description=data['description'],
@@ -94,18 +91,11 @@ def add_property():
         user_id=1
     )
 
-    property_image = data['image']
-    property_image_file = request.files
-
-    # print("property=", property)
-    print("image=", property_image)
-    print("image_file=", property_image_file)
-
+    property_image_file = request.files['image']
+    print("img_filename:", property_image_file.filename)
 
     db.session.add(property)
     db.session.commit()
-
-    # TODO: add the image to the bucket, save the object name of image in db
 
     image = Image(
         property_id=property.id,
@@ -115,18 +105,11 @@ def add_property():
     db.session.add(image)
     db.session.commit()
 
-    S3.upload_file(property_image,
-                   AWS_BUCKET,
-                   image.aws_key)
+    with open(property_image_file.filename, "rb") as f:
+        S3.upload_fileobj(f, AWS_BUCKET, image.aws_key)
 
-    # print("current image uuid=", image.aws_key)
+    print("current image uuid=", image.aws_key)
     serialized = property.serialize()
 
     return (jsonify(property=serialized), 201)
 
-# TODO: make AWS accounts! And try to upload images through test form
-
-
-# print('Existing buckets: ')
-# for bucket in response['Buckets']:
-#     print(f'{bucket["Name"]}')
