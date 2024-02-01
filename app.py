@@ -1,7 +1,8 @@
 import os
-from dotenv import load_dotenv
 import boto3
+from dotenv import load_dotenv
 from uuid import uuid4
+from helper import upload_image, generate_image_url
 from flask_cors import CORS, cross_origin
 
 from flask import (
@@ -25,18 +26,7 @@ app.config['SECRET_KEY'] = os.environ.get(
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
-###############################################################################
-# global variables
 
-AWS_BUCKET = os.environ.get('AWS_BUCKET')
-print("AWS_BUCKET=", AWS_BUCKET)
-
-S3 = boto3.client(
-    "s3",
-    os.environ.get('AWS_REGION'),
-    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
-    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
-)
 ##############################################################################
 # TEST form at root, so we can try our POST route and see if AWS works
 
@@ -73,15 +63,13 @@ def get_properties():
 
 
 @app.post('/properties')
-@cross_origin()
 def add_property():
     """ Add property,
             {name, description, address, price, backyard, pool, images}
         Returns confirmation message.
     """
 
-    data = request.files
-    # save object(image_file) name in database
+    data = request.form
     print('request form data: ', data)
 
     property = Property(
@@ -101,23 +89,18 @@ def add_property():
     db.session.add(property)
     db.session.commit()
 
+    aws_key = uuid4()
+
     image = Image(
         property_id=property.id,
-        aws_key=uuid4()
+        aws_key=aws_key,
+        url = generate_image_url(aws_key)
     )
 
     db.session.add(image)
     db.session.commit()
 
-    # with open(property_image_file.filename, "rb") as f:
-    S3.upload_fileobj(
-        property_image_file,
-        AWS_BUCKET,
-        image.aws_key,
-        ExtraArgs={
-            "ContentType": property_image_file.content_type
-            }
-    )
+    upload_image(property_image_file, image.aws_key)
 
     print("current image uuid=", image.aws_key)
     serialized = property.serialize()

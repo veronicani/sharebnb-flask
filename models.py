@@ -148,6 +148,11 @@ class Image(db.Model):
         nullable=False
     )
 
+    url = db.Column(
+        db.String,
+        nullable=False,
+    )
+
     # backref'd in Property Model
     # property = db.relationship('Property', backref="images")
 
@@ -157,5 +162,6 @@ class Image(db.Model):
         return {
             "id": self.id,
             "property_id": self.property_id,
-            "aws_key": self.aws_key
+            "aws_key": self.aws_key,
+            "url":self.url,
         }
