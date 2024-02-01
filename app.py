@@ -92,8 +92,8 @@ def add_property():
     )
 
     property_image_file = request.files['image']
-    print("img_filename:", property_image_file.filename)
-    # breakpoint()
+    print("img_file:", property_image_file)
+    print("inside_img_file", property_image_file.content_type)
 
     db.session.add(property)
     db.session.commit()
@@ -106,8 +106,15 @@ def add_property():
     db.session.add(image)
     db.session.commit()
 
-    with open(property_image_file.filename, "rb") as f:
-        S3.upload_fileobj(f, AWS_BUCKET, image.aws_key)
+    # with open(property_image_file.filename, "rb") as f:
+    S3.upload_fileobj(
+        property_image_file,
+        AWS_BUCKET,
+        image.aws_key,
+        ExtraArgs={
+            "ContentType": property_image_file.content_type
+            }
+    )
 
     print("current image uuid=", image.aws_key)
     serialized = property.serialize()
