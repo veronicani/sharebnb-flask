@@ -80,7 +80,7 @@ def add_property():
         Returns confirmation message.
     """
 
-    data = request.form
+    data = request.files
     # save object(image_file) name in database
     print('request form data: ', data)
 
