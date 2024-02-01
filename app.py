@@ -69,8 +69,8 @@ def get_properties():
 
     return jsonify(properties=serialized)
 
-# TODO: change back to /properties when requesting from actual FE
-@app.post('/')
+
+@app.post('/properties')
 def add_property():
     """ Add property,
             {name, description, address, price, backyard, pool, images}
@@ -81,13 +81,14 @@ def add_property():
     # save object(image_file) name in database
     print('request form data: ', data)
 
+
     property = Property(
         name=data['name'],
         description=data['description'],
         address=data['address'],
         price=data['price'],
-        backyard=True if data.get('backyard') else False,
-        pool=True if data.get('pool') else False,
+        backyard=data['backyard'],
+        pool=data['pool'],
         user_id=1
     )
 
