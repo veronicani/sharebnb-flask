@@ -45,8 +45,8 @@ p2 = Property(
 )
 
 p3 = Property(
-    name="BackyardPool",
-    description="got both!",
+    name="Backyard and Pool",
+    description="We have both!",
     price=1000,
     address="address-3",
     backyard=True,
