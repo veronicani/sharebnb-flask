@@ -50,14 +50,17 @@ def get_properties():
     """
 
     search = request.args.get("term")
+    print("get search term=", search)
 
     if not search:
         properties = Property.query.all()
     else:
         properties = Property.query.filter(
-            Property.name.ilike(f"%search%")).all()
+            Property.name.ilike(f"%{search}%")).all() or Property.query.filter(
+                Property.address.ilike(f"%{search}%")).all()
 
     serialized = [property.serialize() for property in properties]
+    print("get properties serialized= ", serialized)
 
     return jsonify(properties=serialized)
 
