@@ -11,6 +11,7 @@ Flask-DebugToolbar @ git+https://github.com/pallets-eco/flask-debugtoolbar@9b63a
 Flask-SQLAlchemy==3.1.1
 Flask-WTF==1.2.1
 greenlet==3.0.3
+gunicorn==21.2.0
 ipython==8.20.0
 itsdangerous==2.1.2
 jedi==0.19.1
