@@ -97,7 +97,7 @@ def add_property():
     image = Image(
         property_id=property.id,
         aws_key=aws_key,
-        url = generate_image_url(aws_key)
+        url=generate_image_url(aws_key)
     )
 
     db.session.add(image)
