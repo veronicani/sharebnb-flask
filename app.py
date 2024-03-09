@@ -1,17 +1,15 @@
 import os
-import boto3
-from dotenv import load_dotenv
+
 from uuid import uuid4
+from flask_cors import CORS
 from helper import upload_image, generate_image_url
-from flask_cors import CORS, cross_origin
 
 from flask import (
-    Flask, render_template, flash, redirect, session, g, abort, jsonify, request
+    Flask, render_template, jsonify, request
 )
 from flask_debugtoolbar import DebugToolbarExtension
-from sqlalchemy.exc import IntegrityError
 from models import (
-    db, connect_db, User, Property, Image)
+    db, connect_db, Property, Image)
 
 app = Flask(__name__)
 CORS(app)
