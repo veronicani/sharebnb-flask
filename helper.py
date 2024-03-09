@@ -11,6 +11,7 @@ S3 = boto3.client(
     aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
 )
 
+
 def upload_image(image_file, aws_key):
 
     S3.upload_fileobj(
@@ -24,6 +25,7 @@ def upload_image(image_file, aws_key):
     )
 
     return True
+
 
 def generate_image_url(aws_key):
     return f'https://{AWS_BUCKET}.s3.amazonaws.com/{aws_key}'
