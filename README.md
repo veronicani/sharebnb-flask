@@ -46,6 +46,6 @@ See [requirements.txt](https://github.com/veronicani/sharebnb-flask/blob/main/re
    (venv) $ ipython
    ```
 2. Run seed file:
-  ```py
-  In [1]: run seed.py
-  ```
+    ```py
+    In [1]: run seed.py
+    ```
