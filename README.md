@@ -28,9 +28,9 @@ See [requirements.txt](https://github.com/veronicani/sharebnb-flask/blob/main/re
     Note: this will override any previous installs in the venv.
 4. Run server.
     ```sh
-    $ flask run -p 5000
+    (venv) $ flask run -p 5000
     ```
-    (For some macs, running on port 5000 will lead to a conflict, so run on port 5001 instead)
+    (For some macs, running on port 5000 will lead to an address conflict, so run on port 5001 instead)
 
 ### Seeding Data
 1. Create new database (requires PostgresQL to be installed):
