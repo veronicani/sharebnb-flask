@@ -25,30 +25,43 @@ db.session.commit()
 
 # Properties ##############################
 p1 = Property(
-    name="Pool-1",
-    description="description-1",
+    name="Sunny Oasis with Private Pool",
+    description=(
+        "Escape the summer heat and dive into your own private"
+        + " paradise! Our spacious backyard oasis features a"
+        + " sparkling pool, lounge chairs, and a shaded patio perfect"
+        + " for relaxing with friends and family."
+        ),
     price=10,
-    address="address-1",
+    address="123 Main Street, Sunnydale Suburb, CA, 98765",
     backyard=False,
     pool=True,
     user_id=1,
 )
 
 p2 = Property(
-    name="Backyard-1",
-    description="description-2",
+    name="Cozy Backyard Retreat",
+    description=(
+        "Discover serenity in our charming backyard retreat! Nestled"
+        + " among towering trees and vibrant foliage, our cozy outdoor space"
+        + " offers a peaceful escape from the hustle and bustle of city life."
+    ),
     price=100,
-    address="address-2",
+    address="456 Elm Avenue, Oakwood Heights Suburb, NY, 54321",
     backyard=True,
     pool=False,
     user_id=1,
 )
 
 p3 = Property(
-    name="Backyard and Pool",
-    description="We have both!",
+    name="Ultimate Outdoor Haven: Backyard & Pool Combo",
+    description=(
+        "Experience the best of both worlds in our ultimate outdoor haven!"
+        + " Our spacious backyard oasis boasts a pristine pool, lush greenery,"
+        + " and ample seating areas for lounging and entertaining."
+    ),
     price=1000,
-    address="address-3",
+    address="789 Oak Street, Maplewood Suburb, NJ, 67890",
     backyard=True,
     pool=True,
     user_id=2,
