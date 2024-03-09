@@ -2,12 +2,11 @@ import os
 
 from uuid import uuid4
 from flask_cors import CORS
-from helper import upload_image, generate_image_url
-
 from flask import (
     Flask, render_template, jsonify, request
 )
 from flask_debugtoolbar import DebugToolbarExtension
+from aws import upload_image, generate_image_url
 from models import (
     db, connect_db, Property, Image)
 
