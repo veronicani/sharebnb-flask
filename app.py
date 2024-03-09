@@ -50,7 +50,6 @@ def get_properties():
     """
 
     search = request.args.get("term")
-    print("get search term=", search)
 
     if not search:
         properties = Property.query.all()
@@ -60,7 +59,6 @@ def get_properties():
                 Property.address.ilike(f"%{search}%")).all()
 
     serialized = [property.serialize() for property in properties]
-    print("get properties serialized= ", serialized)
 
     return jsonify(properties=serialized)
 
@@ -86,8 +84,6 @@ def add_property():
     )
 
     property_image_file = request.files['image']
-    print("img_file:", property_image_file)
-    print("inside_img_file", property_image_file.content_type)
 
     db.session.add(property)
     db.session.commit()
@@ -105,7 +101,6 @@ def add_property():
 
     upload_image(property_image_file, image.aws_key)
 
-    print("current image uuid=", image.aws_key)
     serialized = property.serialize()
 
     return (jsonify(property=serialized), 201)
