@@ -74,27 +74,33 @@ db.session.commit()
 i1 = Image(
     property_id=1,
     aws_key="123",
-    url=("https://images.unsplash.com/" +
-        "photo-1536745511564-a5fa6e596e7b?q=80&w=992&auto=format&fit" +
-        "=crop&ixlib=rb-4.0.3&ixid=" +
-        "M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+    url=(
+        "https://images.unsplash.com/"
+        + "photo-1536745511564-a5fa6e596e7b?q=80&w=992&auto=format&fit"
+        + "=crop&ixlib=rb-4.0.3&ixid="
+        + "M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    ),
 )
 
 
 i2 = Image(
     property_id=2,
     aws_key="456",
-    url= ("https://images.unsplash.com/photo-1560749003-f4b1e17e2dff" +
-          "?q=80&w=1674&auto=format&fit=crop&ixlib=rb-4.0.3" +
-          "&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+    url=(
+        "https://images.unsplash.com/photo-1560749003-f4b1e17e2dff"
+        + "?q=80&w=1674&auto=format&fit=crop&ixlib=rb-4.0.3"
+        + "&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    ),
 )
 
 i3 = Image(
     property_id=3,
     aws_key="789",
-    url= ("https://st.hzcdn.com/simgs/pictures/pools/" +
-          "natural-private-residence-pool-environments-inc-img" +
-          "~66e1401200abf6be_14-3383-1-325dc2d.jpg"),
+    url=(
+        "https://st.hzcdn.com/simgs/pictures/pools/"
+        + "natural-private-residence-pool-environments-inc-img"
+        + "~66e1401200abf6be_14-3383-1-325dc2d.jpg"
+    ),
 )
 
 db.session.add_all([i1, i2, i3])
