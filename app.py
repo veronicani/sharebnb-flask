@@ -68,7 +68,6 @@ def add_property():
     """
 
     data = request.form
-    print('request form data: ', data)
 
     property = Property(
         name=data['name'],

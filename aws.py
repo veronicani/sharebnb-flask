@@ -10,8 +10,6 @@ S3 = boto3.client(
     aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
     aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
 )
-print("AWS_BUCKET=", AWS_BUCKET)
-print("AWS REGION=", AWS_REGION)
 
 
 def upload_image(image_file, aws_key):
