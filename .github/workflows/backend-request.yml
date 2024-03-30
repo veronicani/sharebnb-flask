@@ -1,0 +1,14 @@
+name: Make request to Sharebnb Backend
+on: 
+  schedule:
+  - cron: '0/30 * * * *'
+jobs:
+  get-properties:
+    name: 'Make GET/properties request to Sharebnb Backend'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Make GET request to backend for properties via curl'
+        run: |
+          curl -X GET 'https://veronicani-sharebnb-flask.onrender.com/properties'
+
+        
