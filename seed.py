@@ -31,7 +31,7 @@ p1 = Property(
         + " paradise in our spacious backyard. Perfect"
         + " for relaxing with friends and family."
         ),
-    price=56,
+    price=60,
     address="123 Main Street, Sunnydale Suburb, CA, 98765",
     backyard=False,
     pool=True,
@@ -85,7 +85,7 @@ p5 = Property(
         + " Immerse yourself in crystal-clear waters and enjoy our spacious"
         + " deck."
     ),
-    price=70,
+    price=120,
     address="234 Palm Boulevard, Palm Grove Suburb, FL, 34567",
     backyard=False,
     pool=True,
@@ -143,9 +143,9 @@ i5 = Image(
     property_id=5,
     aws_key="555",
     url=(
-        "https://images.unsplash.com/photo-1544984243-ec57ea16fe25?q=80&w=3174&"
-        + "auto=format&fit=crop&ixlib=rb-4.0.3&ixid"
-        + "=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        "https://images.unsplash.com/photo-1601560896164-834d6f61ea66?"
+        + "q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.0.3&ixid="
+        + "M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     ),
 
 )
