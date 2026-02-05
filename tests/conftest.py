@@ -1,21 +1,18 @@
 """Pytest configuration and fixtures for ShareBnB tests."""
 
 import pytest
-from app import app as flask_app
-from models import db, User, Property, Image
+from sharebnb import create_app
+from sharebnb.models import db, User, Property, Image
 
 
 @pytest.fixture(scope="session")
 def app():
     """Create application for testing."""
-    flask_app.config['TESTING'] = True
-    flask_app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///sharebnb_test'
-    flask_app.config['SQLALCHEMY_ECHO'] = False
-    flask_app.config['WTF_CSRF_ENABLED'] = False
+    app = create_app("testing")
 
-    with flask_app.app_context():
+    with app.app_context():
         db.create_all()
-        yield flask_app
+        yield app
         db.drop_all()
 
 
