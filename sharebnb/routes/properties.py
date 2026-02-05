@@ -1,0 +1,77 @@
+"""Property routes."""
+
+from uuid import uuid4
+from flask import render_template, jsonify, request
+from sharebnb.models import db, Property, Image
+from sharebnb.services import aws
+
+
+def register_property_routes(app):
+    """Register property routes."""
+
+    @app.get("/")
+    def root():
+        """TEST form."""
+        return render_template("index.html")
+
+    @app.get('/properties')
+    def get_properties():
+        """Returns all properties.
+                JSON like:
+                    { properties: [
+                        {id, name, price, address, pool, backyard, images }], ...}
+        """
+
+        search = request.args.get("term")
+
+        if not search:
+            properties = Property.query.all()
+        else:
+            properties = Property.query.filter(
+                Property.name.ilike(f"%{search}%")).all() or Property.query.filter(
+                    Property.address.ilike(f"%{search}%")).all()
+
+        serialized = [property.serialize() for property in properties]
+
+        return jsonify(properties=serialized)
+
+    @app.post('/properties')
+    def add_property():
+        """Add property,
+                {name, description, address, price, backyard, pool, images}
+            Returns confirmation message.
+        """
+
+        data = request.form
+
+        property = Property(
+            name=data['name'],
+            description=data['description'],
+            address=data['address'],
+            price=data['price'],
+            backyard=True if data['backyard'] == 'true' else False,
+            pool=True if data['pool'] == 'true' else False,
+            user_id=1
+        )
+
+        property_image_file = request.files['image']
+
+        db.session.add(property)
+        db.session.commit()
+
+        aws_key = uuid4()
+
+        image = Image(
+            property_id=property.id,
+            aws_key=aws_key,
+            url=aws.generate_image_url(aws_key)
+        )
+
+        db.session.add(image)
+        db.session.commit()
+
+        aws.upload_image(property_image_file, image.aws_key)
+
+        serialized = property.serialize()
+
+        return (jsonify(property=serialized), 201)
