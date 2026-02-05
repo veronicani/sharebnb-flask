@@ -52,7 +52,7 @@ class Property(db.Model):
         nullable=False,
     )
 
-    images = db.relationship('Image', backref="property")
+    images = db.relationship('Image', backref="property", passive_deletes=True)
 
     def serialize(self):
         """Serialize property to a dict of property info."""

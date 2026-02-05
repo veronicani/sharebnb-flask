@@ -34,7 +34,7 @@ class User(db.Model):
         nullable=False,
     )
 
-    properties = db.relationship('Property', backref="user")
+    properties = db.relationship('Property', backref="user", passive_deletes=True)
 
     def serialize(self):
         """Serialize property to a dict of property info."""

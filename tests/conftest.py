@@ -5,14 +5,24 @@ from sharebnb import create_app
 from sharebnb.models import db, User, Property, Image
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def app():
     """Create application for testing."""
+    from sqlalchemy import event
+
     app = create_app("testing")
 
     with app.app_context():
+        # Enable foreign key constraints for SQLite
+        @event.listens_for(db.engine, "connect")
+        def set_sqlite_pragma(dbapi_conn, connection_record):
+            cursor = dbapi_conn.cursor()
+            cursor.execute("PRAGMA foreign_keys=ON")
+            cursor.close()
+
         db.create_all()
         yield app
+        db.session.remove()
         db.drop_all()
 
 
@@ -24,21 +34,8 @@ def client(app):
 
 @pytest.fixture(scope="function")
 def db_session(app):
-    """Database session with automatic rollback."""
-    with app.app_context():
-        connection = db.engine.connect()
-        transaction = connection.begin()
-
-        # Bind session to connection
-        options = dict(bind=connection, binds={})
-        session = db.create_scoped_session(options=options)
-        db.session = session
-
-        yield session
-
-        transaction.rollback()
-        connection.close()
-        session.remove()
+    """Database session for tests."""
+    yield db.session
 
 
 @pytest.fixture
