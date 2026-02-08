@@ -1,8 +1,8 @@
 """Routes package for ShareBnB."""
 
-from sharebnb.routes.properties import register_property_routes
+from sharebnb.routes.properties import properties_bp
 
 
 def register_routes(app):
     """Register all application routes."""
-    register_property_routes(app)
+    app.register_blueprint(properties_bp)
