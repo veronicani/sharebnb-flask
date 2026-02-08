@@ -1,7 +1,7 @@
 name: Make request to Sharebnb Backend
 on: 
   schedule:
-  - cron: '0/15 * * * *'
+  - cron: '0/10 * * * *'
 jobs:
   get-properties:
     name: 'Make GET/properties request to Sharebnb Backend'
