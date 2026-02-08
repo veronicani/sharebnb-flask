@@ -21,10 +21,17 @@ class DevelopmentConfig(Config):
 
 
 class TestingConfig(Config):
-    """Testing configuration."""
+    """Testing configuration.
+
+    Engine options configured for SQLAlchemy/SQLite compatibility in tests.
+    """
     TESTING = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     SQLALCHEMY_ECHO = False
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "connect_args": {"check_same_thread": False},
+        "poolclass": None,
+    }
 
 
 class ProductionConfig(Config):
