@@ -6,7 +6,7 @@ from sharebnb.models.base import db
 class User(db.Model):
     """Current users in the system."""
 
-    __tablename__ = 'users'
+    __tablename__ = 'sbnb_users'
 
     id = db.Column(
         db.Integer,

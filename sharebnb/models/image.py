@@ -6,7 +6,7 @@ from sharebnb.models.base import db
 class Image(db.Model):
     """Current images for properties in the system."""
 
-    __tablename__ = 'images'
+    __tablename__ = 'sbnb_images'
 
     id = db.Column(
         db.Integer,
@@ -15,7 +15,7 @@ class Image(db.Model):
 
     property_id = db.Column(
         db.Integer,
-        db.ForeignKey('properties.id', ondelete='CASCADE'),
+        db.ForeignKey('sbnb_properties.id', ondelete='CASCADE'),
         nullable=False,
     )
 

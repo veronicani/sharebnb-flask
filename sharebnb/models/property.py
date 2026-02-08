@@ -6,7 +6,7 @@ from sharebnb.models.base import db
 class Property(db.Model):
     """Current properties in the system."""
 
-    __tablename__ = 'properties'
+    __tablename__ = 'sbnb_properties'
 
     id = db.Column(
         db.Integer,
@@ -48,7 +48,7 @@ class Property(db.Model):
 
     user_id = db.Column(
         db.Integer,
-        db.ForeignKey('users.id', ondelete='CASCADE'),
+        db.ForeignKey('sbnb_users.id', ondelete='CASCADE'),
         nullable=False,
     )
 
