@@ -21,11 +21,10 @@ See [requirements.txt](https://github.com/veronicani/sharebnb-flask/blob/main/re
     ```sh
     $ source venv/bin/activate
     ```
-3. Install requirements.txt.
+3. Install dependencies from requirements.txt.
     ```sh
-    (venv) $ pip3 install -r requirements.txt
+    (venv) $ pip install -r requirements.txt
     ```
-    Note: this will override any previous installs in the venv.
 4. Run server.
     ```sh
     (venv) $ flask run -p 5000
@@ -49,3 +48,15 @@ See [requirements.txt](https://github.com/veronicani/sharebnb-flask/blob/main/re
     ```py
     In [1]: run seed.py
     ```
+
+### Running Tests
+Run the test suite using pytest:
+```sh
+(venv) $ pytest
+```
+
+**Options:**
+- `pytest -v` - Verbose output showing each test
+- `pytest -x` - Stop on first failure
+- `pytest tests/test_routes.py` - Run specific test file
+- `pytest --cov=sharebnb` - Run with coverage report
