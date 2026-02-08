@@ -19,7 +19,7 @@ class Image(db.Model):
         nullable=False,
     )
 
-    aws_key = db.Column(
+    storage_key = db.Column(
         db.String,
         nullable=False
     )
@@ -35,6 +35,6 @@ class Image(db.Model):
         return {
             "id": self.id,
             "property_id": self.property_id,
-            "aws_key": self.aws_key,
+            "storage_key": self.storage_key,
             "url": self.url,
         }

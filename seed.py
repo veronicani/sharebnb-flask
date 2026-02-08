@@ -101,7 +101,7 @@ with app.app_context():
     # Images ##############################
     i1 = Image(
         property_id=1,
-        aws_key="123",
+        storage_key="123",
         url=(
             "https://images.unsplash.com/"
             + "photo-1536745511564-a5fa6e596e7b?q=80&w=992&auto=format&fit"
@@ -112,7 +112,7 @@ with app.app_context():
 
     i2 = Image(
         property_id=2,
-        aws_key="456",
+        storage_key="456",
         url=(
             "https://images.unsplash.com/photo-1560749003-f4b1e17e2dff"
             + "?q=80&w=1674&auto=format&fit=crop&ixlib=rb-4.0.3"
@@ -122,7 +122,7 @@ with app.app_context():
 
     i3 = Image(
         property_id=3,
-        aws_key="333",
+        storage_key="333",
         url=(
             "https://images.unsplash.com/photo-1576013551627"
             + "-0cc20b96c2a7?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid"
@@ -132,7 +132,7 @@ with app.app_context():
 
     i4 = Image(
         property_id=4,
-        aws_key="444",
+        storage_key="444",
         url=(
             "https://images.unsplash.com/photo-1611282712338-63a58e27980a?q="
             + "80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid="
@@ -142,7 +142,7 @@ with app.app_context():
 
     i5 = Image(
         property_id=5,
-        aws_key="555",
+        storage_key="555",
         url=(
             "https://images.unsplash.com/photo-1601560896164-834d6f61ea66?"
             + "q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.0.3&ixid="
