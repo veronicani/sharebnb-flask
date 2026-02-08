@@ -2,8 +2,8 @@
 
 import pytest
 import io
-from unittest.mock import patch, MagicMock
-from sharebnb.models import Property, Image, User
+from unittest.mock import patch
+from sharebnb.models import Property
 
 
 class TestPropertyRoutes:
