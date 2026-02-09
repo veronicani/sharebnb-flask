@@ -8,7 +8,7 @@ SQLAlchemy==2.0.25
 psycopg2-binary==2.9.9
 
 # Image storage (Supabase)
-supabase==2.13.2
+supabase>=2.13.0
 
 # Production server
 gunicorn==21.2.0
