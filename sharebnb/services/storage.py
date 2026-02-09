@@ -20,15 +20,19 @@ def upload_image(image_file, image_key):
     Returns:
         bool: True if upload successful
     """
-    sb.storage.from_(SUPABASE_BUCKET).upload(
-        file=image_file,
-        path=image_key,
-        file_options={
-            "content-type": image_file.content_type,
-        }
-    )
-
-    return True
+    try:
+        image_file.seek(0)  # Ensure file pointer is at the start
+        file_bytes = image_file.read()
+        response = sb.storage.from_(SUPABASE_BUCKET).upload(
+            file=file_bytes,
+            path=image_key,
+            file_options={
+                "content-type": image_file.content_type,
+            }
+        )
+        return True
+    except Exception:
+        return False
 
 
 def generate_image_url(image_key):
