@@ -6,7 +6,7 @@ from supabase import create_client, Client
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 SUPABASE_BUCKET = os.environ.get("SUPABASE_BUCKET", "sharebnb")
-print(f"Supabase URL: {SUPABASE_URL}, Bucket: {SUPABASE_BUCKET}")
+
 sb: Client = create_client(supabase_url=SUPABASE_URL, supabase_key=SUPABASE_KEY)
 
 
