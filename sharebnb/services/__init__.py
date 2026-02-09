@@ -1,5 +1,5 @@
 """Services package for ShareBnB."""
 
-from sharebnb.services import aws
+from sharebnb.services import storage
 
-__all__ = ['aws']
+__all__ = ['storage']

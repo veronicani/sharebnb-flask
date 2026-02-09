@@ -3,7 +3,7 @@
 from uuid import uuid4
 from flask import Blueprint, render_template, jsonify, request
 from sharebnb.models import db, Property, Image
-from sharebnb.services import aws
+from sharebnb.services import storage
 
 properties_bp = Blueprint('properties', __name__)
 
@@ -66,13 +66,13 @@ def add_property():
     image = Image(
         property_id=property.id,
         aws_key=aws_key,
-        url=aws.generate_image_url(aws_key)
+        url=storage.generate_image_url(aws_key)
     )
 
     db.session.add(image)
     db.session.commit()
 
-    aws.upload_image(property_image_file, image.aws_key)
+    storage.upload_image(property_image_file, image.aws_key)
 
     serialized = property.serialize()
 

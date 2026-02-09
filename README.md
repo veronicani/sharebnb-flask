@@ -2,7 +2,7 @@
 Backend server for Sharebnb API. In use by [Sharebnb React Frontend](https://github.com/veronicani/sharebnb-react).
 
 ## About The Project
-Integrates AWS S3 into relational database for file storage.
+Integrates Supabase Storage into relational database for image storage.
 ![Database schema](/schema.png?raw=true)
 
 See [requirements.txt](https://github.com/veronicani/sharebnb-flask/blob/main/requirements.txt) for a full list of dependencies.

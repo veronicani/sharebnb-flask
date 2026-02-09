@@ -118,11 +118,11 @@ class TestPropertyRoutes:
         assert len(data["properties"]) == 1
         assert data["properties"][0]["address"] == "123 Main Street"
 
-    @patch('sharebnb.routes.properties.aws.upload_image')
-    @patch('sharebnb.routes.properties.aws.generate_image_url')
+    @patch('sharebnb.routes.properties.storage.upload_image')
+    @patch('sharebnb.routes.properties.storage.generate_image_url')
     def test_post_property_success(self, mock_generate_url, mock_upload, client, db_session, sample_user):
         """Test POST /properties creates property and image."""
-        mock_generate_url.return_value = "https://bucket.s3.amazonaws.com/test-key"
+        mock_generate_url.return_value = "https://example.supabase.co/storage/v1/object/public/sharebnb-images/test-key"
 
         # Create mock file
         data = {
