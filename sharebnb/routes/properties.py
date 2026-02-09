@@ -44,36 +44,49 @@ def add_property():
     """
 
     data = request.form
+    required_fields = ['name', 'description', 'address', 'price']
 
-    property = Property(
-        name=data['name'],
-        description=data['description'],
-        address=data['address'],
-        price=data['price'],
-        backyard=True if data['backyard'] == 'true' else False,
-        pool=True if data['pool'] == 'true' else False,
-        user_id=1
-    )
+    for field in required_fields:
+        if field not in data:
+            return jsonify(error=f"Missing required field: {field}"), 400
 
-    property_image_file = request.files['image']
+    prop_img_fn = request.files.get('image')
+    if not prop_img_fn:
+        return jsonify(error="Image file is required"), 400
+    
+    try:
+        new_prop = Property(
+            name=data['name'],
+            description=data['description'],
+            address=data['address'],
+            price=data['price'],
+            backyard=True if data['backyard'] == 'true' else False,
+            pool=True if data['pool'] == 'true' else False,
+            user_id=1
+        )
 
-    db.session.add(property)
-    db.session.commit()
+        db.session.add(new_prop)
+        # Flush to get new_prop.id before commit, needed for image record
+        db.session.flush()
 
-    # cast to str to avoid test sqlite db error about UUID type
-    aws_key = str(uuid4())
+        # cast to str to avoid test sqlite db error about UUID type
+        img_key = str(uuid4())
+        new_img = Image(
+            property_id=new_prop.id,
+            storage_key=img_key,
+            url=storage.generate_image_url(img_key)
+        )
 
-    image = Image(
-        property_id=property.id,
-        aws_key=aws_key,
-        url=storage.generate_image_url(aws_key)
-    )
+        db.session.add(new_img)
 
-    db.session.add(image)
-    db.session.commit()
+        upload_success = storage.upload_image(prop_img_fn, new_img.storage_key)
+        if not upload_success:
+            return jsonify(error="Failed to upload image"), 500 
+        
+        db.session.commit()
 
-    storage.upload_image(property_image_file, image.aws_key)
-
-    serialized = property.serialize()
-
-    return (jsonify(property=serialized), 201)
+        serialized = new_prop.serialize()
+        return (jsonify(property=serialized), 201)
+    except Exception as e:
+        db.session.rollback()
+        return jsonify(error=str(e)), 500

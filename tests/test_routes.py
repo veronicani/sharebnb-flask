@@ -153,3 +153,54 @@ class TestPropertyRoutes:
         # Verify image record was created
         assert mock_generate_url.called
         assert mock_upload.called
+
+        # Verify property was added to database
+        prop = db_session.query(Property).filter_by(name="New Property").first()
+        assert prop is not None
+        assert prop.description == "A new property"
+        assert prop.address == "789 New St"
+        assert prop.price == 300
+        assert prop.backyard is True
+        assert prop.pool is False
+
+    def test_post_property_missing_field(self, client, db_session):
+        """Test POST /properties with missing required field."""
+        data = {
+            'name': 'New Property',
+            'description': 'A new property',
+            # Missing address field
+            'price': '300',
+            'backyard': 'true',
+            'pool': 'false'
+        }
+
+        response = client.post(
+            "/properties",
+            data=data,
+            content_type='multipart/form-data'
+        )
+
+        assert response.status_code == 400
+        assert "Missing required field" in response.get_json()['error']
+
+    @patch('sharebnb.services.storage.upload_image')
+    def test_add_property_upload_failure(self, mock_upload, client, db_session):
+        """Test that a storage failure rolls back the database transaction."""
+        
+        mock_upload.return_value = False # Simulate Supabase failing
+
+        data = {
+            'name': 'Failure House',
+            'description': 'Should not exist in DB',
+            'address': '123 Fail Ln',
+            'price': '100',
+            'image': (io.BytesIO(b"data"), 'test.jpg')
+        }
+
+        response = client.post('/properties', data=data, content_type='multipart/form-data')
+
+        assert response.status_code == 500
+        
+        prop = db_session.query(Property).filter_by(name="New Property").first()
+        prop = Property.query.filter_by(name='Failure House').first()
+        assert prop is None
