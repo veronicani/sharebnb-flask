@@ -74,7 +74,7 @@ def sample_image(db_session, sample_property):
     """Create a sample image for tests."""
     image = Image(
         property_id=sample_property.id,
-        aws_key="test-key-123",
+        storage_key="test-key-123",
         url="https://bucket.s3.amazonaws.com/test-key-123"
     )
     db_session.add(image)

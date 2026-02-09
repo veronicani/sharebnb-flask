@@ -106,7 +106,7 @@ class TestImageModel:
         """Test creating an image."""
         image = Image(
             property_id=sample_property.id,
-            aws_key="test-key-456",
+            storage_key="test-key-456",
             url="https://bucket.s3.amazonaws.com/test-key-456"
         )
         db_session.add(image)
@@ -114,7 +114,7 @@ class TestImageModel:
 
         assert image.id is not None
         assert image.property_id == sample_property.id
-        assert image.aws_key == "test-key-456"
+        assert image.storage_key == "test-key-456"
         assert image.url == "https://bucket.s3.amazonaws.com/test-key-456"
 
     def test_image_serialize(self, db_session, sample_image):
@@ -123,7 +123,7 @@ class TestImageModel:
 
         assert serialized["id"] == sample_image.id
         assert serialized["property_id"] == sample_image.property_id
-        assert serialized["aws_key"] == "test-key-123"
+        assert serialized["storage_key"] == "test-key-123"
         assert serialized["url"] == "https://bucket.s3.amazonaws.com/test-key-123"
 
     def test_image_cascade_delete(self, db_session, sample_property, sample_image):
